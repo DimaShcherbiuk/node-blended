@@ -1,9 +1,9 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 
-import { env } from './utils/env.js';
+import { env } from "./utils/env.js";
 
-const PORT = Number(env('PORT', '3000'));
+const PORT = Number(env("PORT", "8000"));
 
 export const setupServer = () => {
   const app = express();
