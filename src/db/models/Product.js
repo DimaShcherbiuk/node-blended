@@ -18,7 +18,6 @@ const productSchema = new Schema(
     },
     description: {
       type: String,
-      required: false,
     },
   },
   {
@@ -27,4 +26,4 @@ const productSchema = new Schema(
   }
 );
 
-export const Product = model('product', productSchema)
+export const Product = model("product", productSchema);
