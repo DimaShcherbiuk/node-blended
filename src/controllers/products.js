@@ -6,9 +6,13 @@ import {
   updateProduct,
 } from "../services/products.js";
 import createHttpError from "http-errors";
+import { parseFilters } from "../utils/parseFilters.js";
+import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 
 export async function getAllProducts(req, res) {
-  const products = await getAllProductsFromDB();
+  const filter = parseFilters(req.query);
+  const { page, perPage } = parsePaginationParams(req.query);
+  const products = await getAllProductsFromDB(filter, page, perPage);
   res.json({
     status: 200,
     message: "Successfully found products!",
