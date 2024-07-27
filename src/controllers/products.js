@@ -3,7 +3,9 @@ import {
   getProductByIdFormDB,
   createProduct,
   deleteProduct,
+  updateProduct,
 } from "../services/products.js";
+import createHttpError from "http-errors";
 
 export async function getAllProducts(req, res) {
   const products = await getAllProductsFromDB();
@@ -18,9 +20,7 @@ export async function getProductById(req, res) {
   const { productId } = req.params;
   const product = await getProductByIdFormDB(productId);
   if (!product) {
-    res.status(404).json({
-      message: "Product not found",
-    });
+    throw createHttpError(404, "Product not found");
   } else {
     res.json({
       status: 200,
@@ -43,10 +43,21 @@ export async function deleteProductById(req, res) {
   const { productId } = req.params;
   const product = await deleteProduct(productId);
   if (!product) {
-    res.status(404).json({
-      message: "Product not found",
-    });
+    throw createHttpError(404, "Product not found");
   } else {
     res.sendStatus(204);
   }
+}
+
+export async function updateProductById(req, res) {
+  const { productId } = req.params;
+  const product = await updateProduct(productId, req.body);
+  if (!product) {
+    throw createHttpError(404, "Product not found");
+  }
+  res.json({
+    status: 200,
+    message: "Successfully patched a product!",
+    data: product,
+  });
 }
